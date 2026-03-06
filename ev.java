@@ -1,7 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
 
-public class ev-1 
+git config --global user.email "renanjaques13@gmail.com"public class ev 
 {
     public static void main(String[] args){
         
