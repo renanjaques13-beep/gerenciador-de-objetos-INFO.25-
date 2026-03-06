@@ -1,0 +1,1 @@
+# gerenciador-de-objetos-INFO.25-
