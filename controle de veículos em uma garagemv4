@@ -1,0 +1,80 @@
+public class SistemaGaragem {
+    public static void main(String[] args) {
+        System.out.println("=== SISTEMA DE CONTROLE DE GARAGEM ===\n");
+        
+
+        System.out.println("1. Criando motores...");
+        Motor motorGasolina = new Motor("Gasolina", 150);
+        Motor motorEletrico = new Motor("Elétrico", 200);
+        Motor motorDiesel = new Motor("Diesel", 180);
+        
+        System.out.println("Motores criados:");
+        System.out.println("  - " + motorGasolina);
+        System.out.println("  - " + motorEletrico);
+        System.out.println("  - " + motorDiesel);
+        
+    
+        System.out.println("\n2. Criando condutores...");
+        Condutor condutor1 = new Condutor("João Silva", "12345678900");
+        Condutor condutor2 = new Condutor("Maria Santos", "98765432100");
+        Condutor condutor3 = new Condutor("Pedro Oliveira", "45678912300");
+        
+        System.out.println("Condutores criados:");
+        System.out.println("  - " + condutor1);
+        System.out.println("  - " + condutor2);
+        System.out.println("  - " + condutor3);
+        
+
+        System.out.println("\n3. Criando carros...");
+        
+
+        Carro carro1 = new Carro("Fiat", "Uno", "ABC-1234");
+        System.out.println("Carro 1 criado (sem condutor e motor padrão)");
+        
+
+        Carro carro2 = new Carro("Toyota", "Corolla", "DEF-5678", motorGasolina);
+        System.out.println("Carro 2 criado (com motor a gasolina, sem condutor)");
+        
+   
+        Carro carro3 = new Carro("Tesla", "Model 3", "GHI-9012", motorEletrico, condutor1);
+        System.out.println("Carro 3 criado (com motor elétrico e condutor João)");
+        
+
+        System.out.println("\n4. Exibindo situação inicial dos carros:");
+        carro1.exibirInformacoes();
+        carro2.exibirInformacoes();
+        carro3.exibirInformacoes();
+        
+
+        System.out.println("5. Atribuindo condutor e motor ao Carro 1...");
+        carro1.atualizarCondutor(condutor2);
+        carro1.atualizarMotor(motorDiesel);
+        carro1.exibirInformacoes();
+    
+        System.out.println("6. Trocando condutor do Carro 3...");
+        carro3.atualizarCondutor(condutor3);
+        carro3.exibirInformacoes();
+   
+        System.out.println("7. Trocando motor do Carro 2...");
+        carro2.atualizarMotor(motorEletrico);
+        carro2.exibirInformacoes();
+        
+  
+        System.out.println("8. Atualizando dados do Carro 1...");
+        carro1.atualizarDados("Fiat", "Palio", "JKL-3456");
+        carro1.exibirInformacoes();
+        
+        System.out.println("9. Atualizando dados do Carro 2 com novo motor...");
+        carro2.atualizarDados("Toyota", "Hilux", "MNO-7890", motorDiesel);
+        carro2.exibirInformacoes();
+      s
+        System.out.println("10. Testando alterações via setters...");
+        carro3.setModelo("Model Y");
+        carro3.getMotor().setPotencia(250);
+        condutor3.setNome("Pedro Santos");
+        System.out.println("Carro 3 após alterações:");
+        carro3.exibirInformacoes();
+        
+        System.out.println("=== FIM DA SIMULAÇÃO ===");
+    }
+}
