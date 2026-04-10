@@ -1,0 +1,105 @@
+public class ContaBancaria {
+    private int agencia;
+    private int numeroConta;
+    private String nomeCliente;
+    private double saldo;
+    private int contadorDepositos;
+    
+  
+    public ContaBancaria(int agencia, int numeroConta, String nomeCliente, double saldoInicial) {
+        this.agencia = agencia;
+        this.numeroConta = numeroConta;
+        this.nomeCliente = nomeCliente;
+        this.saldo = saldoInicial;
+        this.contadorDepositos = 0;
+    }
+    
+   
+    public int getAgencia() {
+        return agencia;
+    }
+    
+    public int getNumeroConta() {
+        return numeroConta;
+    }
+    
+    public String getNomeCliente() {
+        return nomeCliente;
+    }
+    
+    public double getSaldo() {
+        return saldo;
+    }
+    
+
+    public boolean depositar(double valor) {
+        if (valor < 5.00) {
+            System.out.println("Erro: Não é permitido depositar valores menores que R$ 5,00");
+            return false;
+        }
+        
+        contadorDepositos++;
+        double valorDeposito = valor;
+        
+        if (contadorDepositos > 5) {
+            valorDeposito -= 2.99;
+            System.out.printf("Taxa de R$ 2,99 aplicada (após o 5º depósito).%n");
+        }
+        
+        saldo += valorDeposito;
+        System.out.printf("Depósito de R$ %.2f realizado com sucesso!%n", valor);
+        if (contadorDepositos > 5) {
+            System.out.printf("Valor líquido após taxa: R$ %.2f%n", valorDeposito);
+        }
+        return true;
+    }
+
+    public boolean sacar() {
+        double valorPadrao = 49.90;
+        return sacar(valorPadrao);
+    }
+    
+
+    public boolean sacar(double valor) {
+        if (valor > saldo) {
+            System.out.printf("Erro: Saldo insuficiente! Saldo atual: R$ %.2f%n", saldo);
+            return false;
+        }
+        
+        saldo -= valor;
+        System.out.printf("Saque de R$ %.2f realizado com sucesso!%n", valor);
+        return true;
+    }
+    
+
+    public boolean sacar(double valor, int diasAntecipacao) {
+        if (diasAntecipacao < 0) {
+            System.out.println("Erro: Dias meu parça de antecipação não podem ser negativos!");
+            return false;
+        }
+        
+        double taxa = 0.10 * diasAntecipacao;
+        double valorComTaxa = valor * (1 + taxa);
+        
+        if (valorComTaxa > saldo) {
+            System.out.printf("Erroo Saldo insuficiente para saque com antecipação!%n");
+            System.out.printf("Valor total com taxa: R$ %.2f | Saldo: R$ %.2f%n", valorComTaxa, saldo);
+            return false;
+        }
+        
+        saldo -= valorComTaxa;
+        System.out.printf("Saque de R$ %.2f com antecipacao de %d dia(s) realizado!%n", valor, diasAntecipacao);
+        System.out.printf("Taxa aplicada: %.1f%% | Valor total debitado: R$ %.2f%n", taxa * 100, valorComTaxa);
+        return true;
+    }
+
+    public void exibirInformacoes() {
+        System.out.println("\n=== DADOS DA CONTA ===");
+        System.out.printf("Cliente: %s%n", nomeCliente);
+        System.out.printf("Agência: %d%n", agencia);
+        System.out.printf("Conta: %d%n", numeroConta);
+        System.out.printf("Saldo: R$ %.2f%n", saldo);
+        System.out.printf("Total de depósitos realizados: %d%n", contadorDepositos);
+        System.out.println("=====================\n");
+    }
+}
