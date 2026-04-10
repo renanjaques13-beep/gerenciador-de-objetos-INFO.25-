@@ -1,0 +1,127 @@
+import java.util.Scanner;
+
+public class SistemaBancario {
+    private static Scanner scanner = new Scanner(System.in);
+    private static ContaBancaria contaPrincipal;
+    
+    public static void main(String[] args) {
+        System.out.println("=== SISTEMA BANCÁRIO - CADASTRO DE CONTA ===\n");
+        
+        
+        cadastrarContaPrincipal();
+        
+     
+        int opcao;
+        do {
+            exibirMenu();
+            opcao = lerInteiro("Digite a opção desejada: ");
+            
+            switch (opcao) {
+                case 1:
+                    realizarDeposito();
+                    break;
+                case 2:
+                    realizarSaque();
+                    break;
+                case 3:
+                    consultarSaldo();
+                    break;
+                case 4:
+                    exibirInformacoesCompletas();
+                    break;
+                case 0:
+                    System.out.println("\nEncerrando o sistema. Obrigado por utilizar nossos serviços!");
+                    break;
+                default:
+                    System.out.println("Opção inválida! Tente novamente.");
+            }
+            
+        } while (opcao != 0);
+        
+        scanner.close();
+    }
+    
+    private static void cadastrarContaPrincipal() {
+        System.out.print("Digite o número da agência: ");
+        int agencia = scanner.nextInt();
+        
+        System.out.print("Digite o número da conta: ");
+        int numeroConta = scanner.nextInt();
+        scanner.nextLine(); // Limpar buffer
+        
+        System.out.print("Digite o nome do cliente: ");
+        String nomeCliente = scanner.nextLine();
+        
+        System.out.print("Digite o saldo inicial: R$ ");
+        double saldoInicial = scanner.nextDouble();
+        
+        contaPrincipal = new ContaBancaria(agencia, numeroConta, nomeCliente, saldoInicial);
+        System.out.println("\nConta cadastrada com sucesso!\n");
+        contaPrincipal.exibirInformacoes();
+    }
+    
+    private static void exibirMenu() {
+        System.out.println("\n=== MENU DE OPERAÇÕES ===");
+        System.out.println("1 - Realizar Depósito");
+        System.out.println("2 - Realizar Saque");
+        System.out.println("3 - Consultar Saldo");
+        System.out.println("4 - Exibir informações completas");
+        System.out.println("0 - Sair");
+        System.out.println("=========================");
+    }
+    
+    private static void realizarDeposito() {
+        System.out.println("\n--- DEPÓSITO ---");
+        double valor = lerDouble("Digite o valor para depósito: R$ ");
+        
+        if (contaPrincipal.depositar(valor)) {
+            System.out.printf("Saldo atual: R$ %.2f%n", contaPrincipal.getSaldo());
+        }
+    }
+    
+    private static void realizarSaque() {
+        System.out.println("\n--- SAQUE ---");
+        System.out.println("1 - Saque padrão (R$ 49,90)");
+        System.out.println("2 - Saque com valor específico");
+        System.out.println("3 - Saque com antecipação");
+        int tipoSaque = lerInteiro("Escolha o tipo de saque: ");
+        
+        switch (tipoSaque) {
+            case 1:
+                contaPrincipal.sacar();
+                break;
+            case 2:
+                double valor = lerDouble("Digite o valor do saque: R$ ");
+                contaPrincipal.sacar(valor);
+                break;
+            case 3:
+                double valorSaque = lerDouble("Digite o valor do saque: R$ ");
+                int dias = lerInteiro("Digite o número de dias de antecipação: ");
+                contaPrincipal.sacar(valorSaque, dias);
+                break;
+            default:
+                System.out.println("Opção inválida!");
+        }
+        
+        System.out.printf("Saldo atual: R$ %.2f%n", contaPrincipal.getSaldo());
+    }
+    
+    private static void consultarSaldo() {
+        System.out.println("\n--- CONSULTA DE SALDO ---");
+        System.out.printf("Saldo atual: R$ %.2f%n", contaPrincipal.getSaldo());
+    }
+    
+    private static void exibirInformacoesCompletas() {
+        contaPrincipal.exibirInformacoes();
+    }
+    
+    private static int lerInteiro(String mensagem) {
+        System.out.print(mensagem);
+        return scanner.nextInt();
+    }
+    
+    private static double lerDouble(String mensagem) {
+        System.out.print(mensagem);
+        return scanner.nextDouble();
+    }
+}
